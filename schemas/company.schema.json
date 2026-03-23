@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/company.schema.json",
+  "title": "Normalized Company",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["company"],
+  "properties": {
+    "company": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "brand_name", "description", "industry", "business_model", "offer",
+        "deal_type", "average_check", "sales_cycle", "target_regions",
+        "proof_assets", "next_step_goal"
+      ],
+      "properties": {
+        "brand_name": {"type": "string"},
+        "description": {"type": "string"},
+        "industry": {"type": "string"},
+        "business_model": {"type": "string"},
+        "offer": {"type": "string"},
+        "deal_type": {"type": "string", "enum": ["", "one-off", "subscription", "service", "enterprise"]},
+        "average_check": {"type": "string"},
+        "sales_cycle": {"type": "string"},
+        "target_regions": {"type": "array", "items": {"type": "string"}},
+        "proof_assets": {"type": "array", "items": {"type": "string"}},
+        "next_step_goal": {"type": "string", "enum": ["", "demo", "call", "kp", "pilot"]}
+      }
+    }
+  }
+}

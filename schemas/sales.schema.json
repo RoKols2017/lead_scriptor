@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/sales.schema.json",
+  "title": "Normalized Sales",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sales"],
+  "properties": {
+    "sales": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_company_types", "target_titles", "auto_discover_titles", "desired_lpr_profiles",
+        "outreach_channel", "objection_sensitivity", "call_goal", "hard_constraints"
+      ],
+      "properties": {
+        "target_company_types": {"type": "array", "items": {"type": "string"}},
+        "target_titles": {"type": "array", "items": {"type": "string"}},
+        "auto_discover_titles": {"type": "boolean", "default": false},
+        "desired_lpr_profiles": {"type": "integer", "minimum": 1, "default": 3},
+        "outreach_channel": {"type": "string", "enum": ["", "phone", "email", "linkedin", "mixed"]},
+        "objection_sensitivity": {"type": "string", "enum": ["", "low", "medium", "high"]},
+        "call_goal": {"type": "string"},
+        "hard_constraints": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

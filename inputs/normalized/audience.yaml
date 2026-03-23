@@ -1,0 +1,23 @@
+audience:
+  suspected_core_audience: "Кого считаем целевой аудиторией?"
+  current_customers:
+    - "Кто уже покупал, если опыт есть?"
+  buyer_type: ""
+  decision_context: ""
+  languages:
+    []
+  regions:
+    []
+  income_level_hint: ""
+  roles_or_professions:
+    []
+  interests:
+    []
+  pains:
+    - "Какие боли предполагаем?"
+  fears:
+    []
+  needs:
+    []
+  desired_outcomes:
+    []

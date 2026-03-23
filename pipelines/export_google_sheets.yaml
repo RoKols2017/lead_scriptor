@@ -1,0 +1,63 @@
+pipeline:
+  id: export_google_sheets
+  purpose: value_only_compatibility_exports
+  required_inputs:
+    - outputs/json/export-manifest.json
+  produces:
+    - outputs/xlsx/
+    - outputs/csv/
+  stage_artifacts:
+    - export_manifest
+    - value_only_exports
+  export_profiles:
+    marketing-homework:
+      required_artifacts:
+        - outputs/json/marketing-homework.json
+      outputs:
+        - outputs/xlsx/marketing-homework.xlsx
+        - outputs/csv/marketing-homework.csv
+    custdev-simulated:
+      required_artifacts:
+        - outputs/json/custdev-simulated.json
+      outputs:
+        - outputs/xlsx/custdev-simulated.xlsx
+        - outputs/csv/custdev-simulated.csv
+    interview-synthesis:
+      required_artifacts:
+        - outputs/json/interview-synthesis.json
+      outputs:
+        - outputs/xlsx/interview-synthesis.xlsx
+        - outputs/csv/interview-clusters.csv
+    lpr-discovery:
+      required_artifacts:
+        - outputs/json/lpr-discovery.json
+      outputs:
+        - outputs/xlsx/lpr-discovery.xlsx
+        - outputs/csv/lpr-candidates.csv
+    sales-script:
+      required_artifacts:
+        - outputs/json/sales-script.json
+      outputs:
+        - outputs/xlsx/sales-script.xlsx
+        - outputs/csv/sales-script-blocks.csv
+    sales-script-styled:
+      required_artifacts:
+        - outputs/json/sales-script-styled.json
+      outputs:
+        - outputs/xlsx/sales-script-styled.xlsx
+        - outputs/csv/sales-script-styled.csv
+  constraints:
+    values_only: true
+    google_sheets_runtime_dependency: false
+  blocking_conditions:
+    - missing_required_artifact_for_profile
+    - formula_leakage_detected
+  resume_from:
+    - outputs/json/export-manifest.json
+  export_targets:
+    - marketing-homework
+    - custdev-simulated
+    - interview-synthesis
+    - lpr-discovery
+    - sales-script
+    - sales-script-styled

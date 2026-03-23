@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "marketing-homework": false,
+    "custdev-simulated": false,
+    "interview-synthesis": false,
+    "lpr-discovery": false,
+    "sales-script": false,
+    "sales-script-styled": false
+  },
+  "values_only": true
+}

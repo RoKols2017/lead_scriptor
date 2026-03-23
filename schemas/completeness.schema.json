@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/completeness.schema.json",
+  "title": "Completeness Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "ready_for", "blocked_for", "missing_required", "weak_fields"],
+  "properties": {
+    "status": {"type": "string", "enum": ["empty", "partial", "ready"]},
+    "ready_for": {"type": "array", "items": {"type": "string"}},
+    "blocked_for": {"type": "array", "items": {"type": "string"}},
+    "missing_required": {"type": "array", "items": {"type": "string"}},
+    "weak_fields": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}

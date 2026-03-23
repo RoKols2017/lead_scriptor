@@ -1,0 +1,7 @@
+homework:
+  need_marketing_sheet: true
+  need_custdev_chain: true
+  need_lpr_chain: true
+  need_sales_script: true
+  export_google_sheets_ready: true
+  replace_formulas_with_values: true

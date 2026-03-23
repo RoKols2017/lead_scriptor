@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/provenance.schema.json",
+  "title": "Provenance Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["field_path", "source_type", "source_ref", "captured_at"],
+  "properties": {
+    "field_path": {"type": "string", "minLength": 1},
+    "source_type": {
+      "type": "string",
+      "enum": ["raw", "user_answer", "inferred", "legacy_sheet", "interview_transcript"]
+    },
+    "source_ref": {"type": "string", "minLength": 1},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "notes": {"type": "string"},
+    "captured_at": {"type": "string", "format": "date-time"}
+  }
+}

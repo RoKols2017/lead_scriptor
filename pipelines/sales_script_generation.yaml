@@ -1,0 +1,39 @@
+pipeline:
+  id: sales_script_generation
+  purpose: block_by_block_sales_script
+  required_inputs:
+    - outputs/json/lpr-discovery.json
+    - inputs/normalized/company.yaml
+    - inputs/normalized/sales.yaml
+    - inputs/normalized/tone.yaml
+    - inputs/validation/completeness.json
+  stages:
+    - script_stage_generator
+  produces:
+    json: outputs/json/sales-script.json
+    md: outputs/md/sales-script.md
+    csv: outputs/csv/sales-script-blocks.csv
+    xlsx: outputs/xlsx/sales-script.xlsx
+  stage_artifacts:
+    - script_blocks
+  resume_from:
+    - outputs/json/lpr-discovery.json
+  export_targets:
+    - sales-script
+  readiness_gate:
+    report: inputs/validation/completeness.json
+    route_must_be_ready_for: sales_script
+  blocking_conditions:
+    - lpr_profile_missing
+    - company.brand_name_missing
+    - company.offer_missing
+    - sales.outreach_channel_missing
+    - sales.call_goal_missing
+    - tone.language_missing
+    - tone.politeness_missing
+  logging:
+    level: INFO
+    events:
+      - script_block_start
+      - script_block_generated
+      - blocker_detected

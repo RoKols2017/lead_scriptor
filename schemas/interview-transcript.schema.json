@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/interview-transcript.schema.json",
+  "title": "Interview Transcript",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interview_id", "source", "language", "transcript"],
+  "properties": {
+    "interview_id": {"type": "string"},
+    "source": {"type": "string"},
+    "language": {"type": "string"},
+    "participant_role": {"type": "string"},
+    "transcript": {"type": "string", "minLength": 1}
+  }
+}

@@ -1,0 +1,28 @@
+pipeline:
+  id: intake_ingest
+  stage: ingest
+  required_inputs:
+    - inputs/raw/product.md
+    - inputs/raw/company.md
+    - inputs/raw/audience.md
+    - inputs/raw/tone.md
+    - inputs/raw/constraints.md
+  optional_inputs:
+    - inputs/raw/followup_answers.md
+  produces:
+    - runs/intake-ingest.json
+  stage_artifacts:
+    - candidate_payload
+    - provenance_notes
+  blocking_conditions:
+    - missing_all_raw_inputs
+  resume_from:
+    - inputs/raw/followup_answers.md
+  export_targets: []
+  logging:
+    level: DEBUG
+    events:
+      - stage_start
+      - input_read
+      - candidate_extracted
+      - stage_finish

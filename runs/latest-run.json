@@ -1,0 +1,24 @@
+{
+  "run_id": "run-20260323T192232Z",
+  "stage": "normalize-and-save",
+  "input_hash": "raw-markdown-runtime",
+  "model_route": "config-first",
+  "updated_fields": [
+    "company.industry",
+    "sales.call_goal",
+    "sales.outreach_channel",
+    "sales.target_titles_or_auto_discover_titles"
+  ],
+  "blockers": [
+    "lpr_chain",
+    "sales_script"
+  ],
+  "artifacts": [
+    "inputs/normalized/product.yaml",
+    "inputs/normalized/company.yaml",
+    "inputs/normalized/audience.yaml",
+    "inputs/normalized/sales.yaml",
+    "inputs/normalized/tone.yaml",
+    "inputs/normalized/homework.yaml"
+  ]
+}

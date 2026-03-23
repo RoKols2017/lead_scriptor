@@ -1,0 +1,34 @@
+pipeline:
+  id: script_styling
+  purpose: tone_adapted_sales_script
+  required_inputs:
+    - outputs/json/sales-script.json
+    - inputs/normalized/tone.yaml
+  optional_inputs:
+    - outputs/json/interview-synthesis.json
+  stages:
+    - script_stylizer
+  produces:
+    json: outputs/json/sales-script-styled.json
+    md: outputs/md/sales-script-styled.md
+    csv: outputs/csv/sales-script-styled.csv
+    xlsx: outputs/xlsx/sales-script-styled.xlsx
+  stage_artifacts:
+    - styled_script
+    - banned_phrase_check
+  resume_from:
+    - outputs/json/sales-script.json
+  export_targets:
+    - sales-script-styled
+  readiness_gate:
+    upstream_artifact_required: outputs/json/sales-script.json
+  blocking_conditions:
+    - base_script_missing
+    - incomplete_tone_contract
+    - banned_phrase_conflict
+  logging:
+    level: INFO
+    events:
+      - styling_start
+      - banned_phrase_check
+      - style_diff_written

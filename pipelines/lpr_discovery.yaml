@@ -1,0 +1,40 @@
+pipeline:
+  id: lpr_discovery
+  purpose: target_company_and_decision_makers
+  required_inputs:
+    - inputs/normalized/product.yaml
+    - inputs/normalized/company.yaml
+    - inputs/normalized/sales.yaml
+    - inputs/validation/completeness.json
+  optional_inputs:
+    - outputs/json/interview-synthesis.json
+  stages:
+    - company_segmentation
+    - lpr_discovery
+  produces:
+    json: outputs/json/lpr-discovery.json
+    md: outputs/md/lpr-discovery.md
+    csv: outputs/csv/lpr-candidates.csv
+    xlsx: outputs/xlsx/lpr-discovery.xlsx
+  stage_artifacts:
+    - target_company_profiles
+    - lpr_candidates
+  resume_from:
+    - outputs/json/interview-synthesis.json
+    - inputs/validation/completeness.json
+  export_targets:
+    - lpr-discovery
+  readiness_gate:
+    report: inputs/validation/completeness.json
+    route_must_be_ready_for: lpr_chain
+  blocking_conditions:
+    - company.offer_missing
+    - company.industry_missing
+    - sales.target_company_types_missing
+    - sales.target_titles_missing_and_auto_discover_false
+  logging:
+    level: INFO
+    events:
+      - company_profiles_generated
+      - lpr_profiles_generated
+      - blocker_detected

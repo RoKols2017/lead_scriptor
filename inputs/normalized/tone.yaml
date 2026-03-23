@@ -1,0 +1,14 @@
+tone:
+  language: "ru"
+  politeness: "formal"
+  person: "2nd"
+  confidence_level: "measured"
+  verbosity: "short"
+  banned_phrases:
+    []
+  preferred_patterns:
+    - "Какой стиль коммуникации нужен?"
+  examples_good:
+    []
+  examples_bad:
+    []

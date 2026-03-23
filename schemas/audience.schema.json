@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/audience.schema.json",
+  "title": "Normalized Audience",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["audience"],
+  "properties": {
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suspected_core_audience", "current_customers", "buyer_type", "decision_context",
+        "languages", "regions", "income_level_hint", "roles_or_professions", "interests",
+        "pains", "fears", "needs", "desired_outcomes"
+      ],
+      "properties": {
+        "suspected_core_audience": {"type": "string"},
+        "current_customers": {"type": "array", "items": {"type": "string"}},
+        "buyer_type": {"type": "string", "enum": ["", "end-user", "operator", "manager", "owner"]},
+        "decision_context": {"type": "string"},
+        "languages": {"type": "array", "items": {"type": "string"}},
+        "regions": {"type": "array", "items": {"type": "string"}},
+        "income_level_hint": {"type": "string"},
+        "roles_or_professions": {"type": "array", "items": {"type": "string"}},
+        "interests": {"type": "array", "items": {"type": "string"}},
+        "pains": {"type": "array", "items": {"type": "string"}},
+        "fears": {"type": "array", "items": {"type": "string"}},
+        "needs": {"type": "array", "items": {"type": "string"}},
+        "desired_outcomes": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

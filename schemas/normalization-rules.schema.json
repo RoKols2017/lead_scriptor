@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/normalization-rules.schema.json",
+  "title": "Normalization Rules",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "rules"],
+  "properties": {
+    "version": {"type": "string"},
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_path", "allowed_sources", "missing_policy", "weak_patterns"],
+        "properties": {
+          "field_path": {"type": "string"},
+          "allowed_sources": {"type": "array", "items": {"type": "string"}},
+          "missing_policy": {"type": "string", "enum": ["block", "warn", "allow_empty"]},
+          "weak_patterns": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

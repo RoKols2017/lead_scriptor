@@ -1,0 +1,12 @@
+sales:
+  target_company_types:
+    - "unknown-company-type"
+  target_titles:
+    []
+  auto_discover_titles: false
+  desired_lpr_profiles: 3
+  outreach_channel: ""
+  objection_sensitivity: ""
+  call_goal: ""
+  hard_constraints:
+    []

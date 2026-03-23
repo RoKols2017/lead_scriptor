@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/guided-questions.schema.json",
+  "title": "Guided Questions Batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "questions", "max_questions", "generated_from"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["empty", "ready", "answered"]
+    },
+    "max_questions": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "generated_from": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "field_path", "priority", "question"],
+        "properties": {
+          "id": {"type": "string"},
+          "field_path": {"type": "string"},
+          "priority": {"type": "string", "enum": ["high", "medium", "low"]},
+          "question": {"type": "string"},
+          "reason": {"type": "string"}
+        }
+      }
+    }
+  }
+}

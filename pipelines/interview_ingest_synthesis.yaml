@@ -1,0 +1,41 @@
+pipeline:
+  id: interview_ingest_synthesis
+  purpose: real_interview_synthesis
+  required_inputs:
+    - inputs/interviews/
+    - inputs/normalized/product.yaml
+    - inputs/normalized/audience.yaml
+  optional_inputs:
+    - inputs/normalized/company.yaml
+    - inputs/normalized/sales.yaml
+  stages:
+    - interview_normalization
+    - interview_clustering
+    - interview_corrections
+  produces:
+    json: outputs/json/interview-synthesis.json
+    md: outputs/md/interview-synthesis.md
+    csv: outputs/csv/interview-clusters.csv
+    xlsx: outputs/xlsx/interview-synthesis.xlsx
+  stage_artifacts:
+    - normalized_transcripts
+    - interview_clusters
+    - correction_proposals
+  resume_from:
+    - inputs/interviews/
+  export_targets:
+    - interview-synthesis
+  readiness_gate:
+    report: inputs/validation/completeness.json
+    route_requires_presence_of:
+      - inputs/interviews/
+  blocking_conditions:
+    - no_valid_transcripts
+    - transcript_schema_failure
+    - product_or_audience_context_missing
+  logging:
+    level: INFO
+    events:
+      - transcript_ingested
+      - cluster_count
+      - correction_proposals_count

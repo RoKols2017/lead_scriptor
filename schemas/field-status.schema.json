@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/field-status.schema.json",
+  "title": "Field Status",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["field_path", "status", "reason"],
+  "properties": {
+    "field_path": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["required", "recommended", "optional"]},
+    "reason": {"type": "string", "minLength": 1},
+    "stages": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": []
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/contradictions.schema.json",
+  "title": "Contradictions Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "items"],
+  "properties": {
+    "status": {"type": "string", "enum": ["clear", "warning", "blocker"]},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule_id", "severity", "fields", "message"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "severity": {"type": "string", "enum": ["warning", "blocker"]},
+          "fields": {"type": "array", "items": {"type": "string"}},
+          "message": {"type": "string"}
+        }
+      }
+    }
+  }
+}

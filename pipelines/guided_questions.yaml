@@ -1,0 +1,32 @@
+pipeline:
+  id: guided_questions
+  stage: guided-questions
+  required_inputs:
+    - inputs/validation/completeness.json
+    - inputs/validation/contradictions.json
+  produces:
+    - inputs/validation/guided-questions.json
+  stage_artifacts:
+    - blocker_to_question_mapping
+    - prioritized_question_batch
+  limits:
+    max_questions_per_pass: 10
+  blocking_conditions:
+    - no_blockers_or_weak_fields
+  resume_from:
+    - inputs/raw/followup_answers.md
+  export_targets: []
+  resolution_contract:
+    generated_questions: inputs/validation/guided-questions.json
+    answer_file: inputs/raw/followup_answers.md
+    rerun_path:
+      - intake_ingest
+      - normalize_and_save
+      - validation
+  logging:
+    level: DEBUG
+    events:
+      - planner_start
+      - question_selected
+      - question_skipped
+      - planner_finish

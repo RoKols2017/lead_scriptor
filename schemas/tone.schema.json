@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/tone.schema.json",
+  "title": "Normalized Tone",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tone"],
+  "properties": {
+    "tone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "language", "politeness", "person", "confidence_level", "verbosity",
+        "banned_phrases", "preferred_patterns", "examples_good", "examples_bad"
+      ],
+      "properties": {
+        "language": {"type": "string"},
+        "politeness": {"type": "string", "enum": ["formal", "neutral", "informal"]},
+        "person": {"type": "string", "enum": ["1st", "2nd", "3rd"]},
+        "confidence_level": {"type": "string", "enum": ["measured", "confident", "cautious"]},
+        "verbosity": {"type": "string", "enum": ["short", "medium", "long"]},
+        "banned_phrases": {"type": "array", "items": {"type": "string"}},
+        "preferred_patterns": {"type": "array", "items": {"type": "string"}},
+        "examples_good": {"type": "array", "items": {"type": "string"}},
+        "examples_bad": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

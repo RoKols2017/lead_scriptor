@@ -1,0 +1,21 @@
+pipeline:
+  id: expert_mode
+  purpose: orchestrator_only
+  required_inputs:
+    - inputs/validation/completeness.json
+  produces:
+    - runs/latest-run.json
+  stage_artifacts:
+    - route_selection
+    - route_handoff
+  orchestrates:
+    - interview_ingest_synthesis
+    - lpr_discovery
+    - sales_script_generation
+    - script_styling
+  blocking_conditions:
+    - selected_route_not_ready
+  resume_from:
+    - runs/latest-run.json
+  export_targets: []
+  note: Expert mode is an orchestration wrapper and not the only implementation surface.

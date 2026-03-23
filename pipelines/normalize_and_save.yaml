@@ -1,0 +1,32 @@
+pipeline:
+  id: normalize_and_save
+  stage: normalize-and-save
+  required_inputs:
+    - runs/intake-ingest.json
+    - inputs/validation/completeness.json
+    - inputs/validation/contradictions.json
+  optional_inputs:
+    - inputs/raw/followup_answers.md
+  produces:
+    - inputs/normalized/product.yaml
+    - inputs/normalized/company.yaml
+    - inputs/normalized/audience.yaml
+    - inputs/normalized/sales.yaml
+    - inputs/normalized/tone.yaml
+    - inputs/normalized/homework.yaml
+    - runs/latest-run.json
+  stage_artifacts:
+    - normalized_contract_set
+    - latest_run_manifest
+  blocking_conditions:
+    - intake_payload_missing
+  resume_from:
+    - runs/intake-ingest.json
+    - inputs/raw/followup_answers.md
+  export_targets: []
+  logging:
+    level: INFO
+    events:
+      - serialization_start
+      - artifact_written
+      - run_metadata_written

@@ -1,0 +1,45 @@
+pipeline:
+  id: homework_custdev_simulated
+  purpose: lecture_2_simulated_custdev
+  required_inputs:
+    - inputs/normalized/product.yaml
+    - inputs/normalized/audience.yaml
+    - inputs/normalized/homework.yaml
+    - inputs/validation/completeness.json
+  stages:
+    - core_audience
+    - segment_deep_dive
+    - avatar_generation
+    - hypothesis_generation
+    - interview_questions
+    - avatar_interview
+    - interview_evaluation
+  produces:
+    json: outputs/json/custdev-simulated.json
+    md: outputs/md/custdev-simulated.md
+    csv: outputs/csv/custdev-simulated.csv
+    xlsx: outputs/xlsx/custdev-simulated.xlsx
+  stage_artifacts:
+    - core_audience
+    - avatars
+    - hypotheses
+    - interview_question_set
+    - simulated_synthesis
+  resume_from:
+    - inputs/validation/completeness.json
+  export_targets:
+    - custdev-simulated
+  readiness_gate:
+    report: inputs/validation/completeness.json
+    route_must_be_ready_for: custdev
+  blocking_conditions:
+    - product.core_value_missing
+    - audience.pains_or_needs_missing
+    - custdev_stage_blocked
+  logging:
+    level: INFO
+    events:
+      - stage_start
+      - avatar_count
+      - hypothesis_count
+      - synthesis_ready

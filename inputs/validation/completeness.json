@@ -1,0 +1,19 @@
+{
+  "status": "partial",
+  "ready_for": [
+    "homework_marketing",
+    "custdev"
+  ],
+  "blocked_for": [
+    "lpr_chain",
+    "sales_script"
+  ],
+  "missing_required": [
+    "company.industry",
+    "sales.call_goal",
+    "sales.outreach_channel",
+    "sales.target_titles_or_auto_discover_titles"
+  ],
+  "weak_fields": [],
+  "notes": []
+}

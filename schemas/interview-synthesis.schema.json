@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/interview-synthesis.schema.json",
+  "title": "Interview Synthesis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "pain_clusters", "objection_clusters", "desired_outcome_clusters", "correction_proposals"],
+  "properties": {
+    "summary": {"type": "string"},
+    "pain_clusters": {"type": "array", "items": {"type": "string"}},
+    "objection_clusters": {"type": "array", "items": {"type": "string"}},
+    "desired_outcome_clusters": {"type": "array", "items": {"type": "string"}},
+    "correction_proposals": {"type": "array", "items": {"type": "string"}}
+  }
+}

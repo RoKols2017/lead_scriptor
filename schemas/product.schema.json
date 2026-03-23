@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/product.schema.json",
+  "title": "Normalized Product",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["product"],
+  "properties": {
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name", "one_liner", "full_description", "category", "market_type",
+        "problem_statement", "solution_statement", "core_value", "usp_candidates",
+        "features", "benefits", "pricing_model", "price_range", "delivery_model",
+        "geography", "competitors_known", "evidence_available"
+      ],
+      "properties": {
+        "name": {"type": "string"},
+        "one_liner": {"type": "string"},
+        "full_description": {"type": "string"},
+        "category": {"type": "string"},
+        "market_type": {"type": "string", "enum": ["", "B2B", "B2C", "B2B2C"]},
+        "problem_statement": {"type": "string"},
+        "solution_statement": {"type": "string"},
+        "core_value": {"type": "string"},
+        "usp_candidates": {"type": "array", "items": {"type": "string"}},
+        "features": {"type": "array", "items": {"type": "string"}},
+        "benefits": {"type": "array", "items": {"type": "string"}},
+        "pricing_model": {"type": "string"},
+        "price_range": {"type": "string"},
+        "delivery_model": {"type": "string"},
+        "geography": {"type": "array", "items": {"type": "string"}},
+        "competitors_known": {"type": "array", "items": {"type": "string"}},
+        "evidence_available": {"type": "boolean"}
+      }
+    }
+  }
+}

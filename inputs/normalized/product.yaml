@@ -1,0 +1,23 @@
+product:
+  name: "Что это за продукт?"
+  one_liner: ""
+  full_description: "Что это за продукт? Для кого он в первую очередь? Какую проблему он решает? Что именно продается? Как сейчас это продается? В чем предполагаемая ценность?"
+  category: ""
+  market_type: "B2B"
+  problem_statement: "Какую проблему он решает?"
+  solution_statement: "Что именно продается?"
+  core_value: "Как сейчас это продается?"
+  usp_candidates:
+    []
+  features:
+    []
+  benefits:
+    []
+  pricing_model: ""
+  price_range: ""
+  delivery_model: ""
+  geography:
+    []
+  competitors_known:
+    []
+  evidence_available: false

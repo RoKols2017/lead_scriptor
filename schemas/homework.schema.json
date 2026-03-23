@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lead-scriptor.local/schemas/homework.schema.json",
+  "title": "Homework Flags",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["homework"],
+  "properties": {
+    "homework": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "need_marketing_sheet", "need_custdev_chain", "need_lpr_chain",
+        "need_sales_script", "export_google_sheets_ready", "replace_formulas_with_values"
+      ],
+      "properties": {
+        "need_marketing_sheet": {"type": "boolean"},
+        "need_custdev_chain": {"type": "boolean"},
+        "need_lpr_chain": {"type": "boolean"},
+        "need_sales_script": {"type": "boolean"},
+        "export_google_sheets_ready": {"type": "boolean"},
+        "replace_formulas_with_values": {"type": "boolean"}
+      }
+    }
+  }
+}

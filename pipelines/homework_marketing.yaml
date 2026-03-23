@@ -1,0 +1,52 @@
+pipeline:
+  id: homework_marketing
+  purpose: lecture_1_marketing_artifacts
+  required_inputs:
+    - inputs/normalized/product.yaml
+    - inputs/normalized/audience.yaml
+    - inputs/normalized/tone.yaml
+    - inputs/validation/completeness.json
+  stages:
+    - segment_audience
+    - priority_segments
+    - jtbd_generation
+    - pains_and_fears
+    - needs_expansion
+    - content_plan
+    - seo_articles
+    - utp_generation
+    - objections
+    - objection_answers
+    - speech_module
+    - presentation_angles
+  produces:
+    json: outputs/json/marketing-homework.json
+    md: outputs/md/marketing-homework.md
+    csv: outputs/csv/marketing-homework.csv
+    xlsx: outputs/xlsx/marketing-homework.xlsx
+  stage_artifacts:
+    - segments
+    - priority_segments
+    - jtbd
+    - pains_and_fears
+    - content_angles
+  resume_from:
+    - inputs/validation/completeness.json
+  export_targets:
+    - marketing-homework
+  readiness_gate:
+    report: inputs/validation/completeness.json
+    route_must_be_ready_for: homework_marketing
+  blocking_conditions:
+    - product.full_description_missing
+    - product.problem_statement_missing
+    - product.market_type_missing
+    - audience.suspected_core_audience_missing
+    - critical_contradictions_present
+  logging:
+    level: INFO
+    events:
+      - stage_start
+      - stage_output_summary
+      - blocker_detected
+      - export_written

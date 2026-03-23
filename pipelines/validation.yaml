@@ -1,0 +1,31 @@
+pipeline:
+  id: validation
+  stage: gap-analysis
+  required_inputs:
+    - inputs/normalized/product.yaml
+    - inputs/normalized/company.yaml
+    - inputs/normalized/audience.yaml
+    - inputs/normalized/sales.yaml
+    - inputs/normalized/tone.yaml
+    - inputs/normalized/homework.yaml
+  produces:
+    - inputs/validation/completeness.json
+    - inputs/validation/contradictions.json
+    - inputs/validation/warnings.md
+  stage_artifacts:
+    - readiness_report
+    - contradiction_report
+    - weak_fields_report
+  blocking_conditions:
+    - normalized_contract_missing
+  resume_from:
+    - inputs/normalized/product.yaml
+    - inputs/raw/followup_answers.md
+  export_targets: []
+  logging:
+    level: INFO
+    events:
+      - rule_check
+      - blocker_detected
+      - contradiction_detected
+      - readiness_computed
