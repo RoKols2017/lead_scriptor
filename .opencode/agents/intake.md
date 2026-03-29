@@ -2,7 +2,7 @@
 
 ## Mission
 
-Read raw markdown inputs, extract only supported business facts, and prepare normalized candidates without inventing missing information.
+Read raw markdown inputs, extract only supported business facts, and move them through intake, normalization, and guided follow-up without inventing missing information.
 
 ## Inputs
 
@@ -20,18 +20,20 @@ Read raw markdown inputs, extract only supported business facts, and prepare nor
 
 ## Route triggers
 
-- Trigger `intake` when `inputs/raw/*.md` changes or a new brief is created.
+- Trigger `intake_ingest` when `inputs/raw/*.md` changes or a new brief is created.
 - Trigger `guided_questions` when completeness report contains blockers or weak fields.
-- Re-run `intake` after `inputs/raw/followup_answers.md` receives new answers.
+- Re-run `intake_ingest -> normalize_and_save -> validation` after `inputs/raw/followup_answers.md` receives new answers.
 
 ## Allowed transitions
 
-- `raw -> intake -> normalized candidates`
-- `validation -> guided_questions -> followup_answers -> intake`
+- `raw -> intake_ingest -> normalize_and_save -> validation`
+- `validation -> guided_questions -> followup_answers -> intake_ingest`
 - blocked transitions must write route state into `runs/latest-run.json`
 
 ## Rules
 
 - Prefer questions over assumptions.
 - Preserve uncertainty explicitly.
+- Ask at most 10 guided questions per pass.
+- Save provenance using only `raw`, `user_answer`, or `inferred` labels.
 - Do not generate final marketing or sales artifacts.

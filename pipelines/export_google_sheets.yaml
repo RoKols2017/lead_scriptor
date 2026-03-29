@@ -46,6 +46,67 @@ pipeline:
       outputs:
         - outputs/xlsx/sales-script-styled.xlsx
         - outputs/csv/sales-script-styled.csv
+  submission_packages:
+    lecture-1-homework:
+      workbook: outputs/xlsx/lecture-1-homework.xlsx
+      values_only: true
+      sheets:
+        - sheet_name: "Демонстрация"
+          source_profiles:
+            - marketing-homework
+          source_artifacts:
+            - outputs/json/marketing-homework.json
+    lecture-2-homework:
+      workbook: outputs/xlsx/lecture-2-homework.xlsx
+      values_only: true
+      sheets:
+        - sheet_name: "Описание ЦА + CustDev"
+          source_profiles:
+            - custdev-simulated
+            - interview-synthesis
+          source_artifacts:
+            - outputs/json/custdev-simulated.json
+            - outputs/json/interview-synthesis.json
+        - sheet_name: "Определение ЛПР"
+          source_profiles:
+            - lpr-discovery
+          source_artifacts:
+            - outputs/json/lpr-discovery.json
+        - sheet_name: "Генерация скрипта"
+          source_profiles:
+            - sales-script
+            - sales-script-styled
+          source_artifacts:
+            - outputs/json/sales-script.json
+            - outputs/json/sales-script-styled.json
+    full-homework-submission:
+      workbook: outputs/xlsx/homework-submission.xlsx
+      values_only: true
+      sheets:
+        - sheet_name: "Демонстрация"
+          source_profiles:
+            - marketing-homework
+          source_artifacts:
+            - outputs/json/marketing-homework.json
+        - sheet_name: "Описание ЦА + CustDev"
+          source_profiles:
+            - custdev-simulated
+            - interview-synthesis
+          source_artifacts:
+            - outputs/json/custdev-simulated.json
+            - outputs/json/interview-synthesis.json
+        - sheet_name: "Определение ЛПР"
+          source_profiles:
+            - lpr-discovery
+          source_artifacts:
+            - outputs/json/lpr-discovery.json
+        - sheet_name: "Генерация скрипта"
+          source_profiles:
+            - sales-script
+            - sales-script-styled
+          source_artifacts:
+            - outputs/json/sales-script.json
+            - outputs/json/sales-script-styled.json
   constraints:
     values_only: true
     google_sheets_runtime_dependency: false

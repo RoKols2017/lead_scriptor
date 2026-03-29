@@ -11,12 +11,16 @@
   },
   "routing": {
     "extraction": "openai/gpt-5.4-nano",
+    "checklist": "openai/gpt-5.4-nano",
     "classification": "openai/gpt-5.4-nano",
     "intake": "openai/gpt-5.4-mini",
     "rewrite": "openai/gpt-5.4-mini",
+    "normalization": "openai/gpt-5.4-mini",
     "research": "openai/gpt-5.4",
     "custdev": "openai/gpt-5.4",
-    "sales": "openai/gpt-5.4"
+    "lpr": "openai/gpt-5.4",
+    "sales_script": "openai/gpt-5.4",
+    "styling": "openai/gpt-5.4"
   },
   "agents": {
     "intake": ".opencode/agents/intake.md",
@@ -26,17 +30,41 @@
     "sales-architect": ".opencode/agents/sales-architect.md"
   },
   "orchestration": {
+    "mode": "declarative-pipeline",
     "run_manifest": "runs/latest-run.json",
     "validation_report": "inputs/validation/completeness.json",
     "contradictions_report": "inputs/validation/contradictions.json",
     "guided_questions": "inputs/validation/guided-questions.json",
     "followup_answers": "inputs/raw/followup_answers.md",
     "routes": {
-      "intake": {
+      "intake_ingest": {
         "agent": "intake",
         "pipeline": "pipelines/intake_ingest.yaml",
+        "requires": [
+          "inputs/raw/product.md",
+          "inputs/raw/company.md",
+          "inputs/raw/audience.md",
+          "inputs/raw/tone.md",
+          "inputs/raw/constraints.md"
+        ],
         "produces": [
           "runs/intake-ingest.json"
+        ]
+      },
+      "normalize_and_save": {
+        "agent": "intake",
+        "pipeline": "pipelines/normalize_and_save.yaml",
+        "requires": [
+          "runs/intake-ingest.json"
+        ],
+        "produces": [
+          "inputs/normalized/product.yaml",
+          "inputs/normalized/company.yaml",
+          "inputs/normalized/audience.yaml",
+          "inputs/normalized/sales.yaml",
+          "inputs/normalized/tone.yaml",
+          "inputs/normalized/homework.yaml",
+          "runs/latest-run.json"
         ]
       },
       "validation": {
@@ -69,11 +97,13 @@
       },
       "homework_marketing": {
         "agent": "researcher",
-        "pipeline": "pipelines/homework_marketing.yaml"
+        "pipeline": "pipelines/homework_marketing.yaml",
+        "ready_when": "homework_marketing"
       },
       "homework_custdev_simulated": {
         "agent": "interviewer",
-        "pipeline": "pipelines/homework_custdev_simulated.yaml"
+        "pipeline": "pipelines/homework_custdev_simulated.yaml",
+        "ready_when": "custdev"
       },
       "interview_ingest_synthesis": {
         "agent": "interviewer",
@@ -81,11 +111,13 @@
       },
       "lpr_discovery": {
         "agent": "sales-architect",
-        "pipeline": "pipelines/lpr_discovery.yaml"
+        "pipeline": "pipelines/lpr_discovery.yaml",
+        "ready_when": "lpr_chain"
       },
       "sales_script_generation": {
         "agent": "sales-architect",
-        "pipeline": "pipelines/sales_script_generation.yaml"
+        "pipeline": "pipelines/sales_script_generation.yaml",
+        "ready_when": "sales_script"
       },
       "script_styling": {
         "agent": "sales-architect",
@@ -94,12 +126,18 @@
       "export_google_sheets": {
         "agent": "validator",
         "pipeline": "pipelines/export_google_sheets.yaml"
+      },
+      "expert_mode": {
+        "agent": "validator",
+        "pipeline": "pipelines/expert_mode.yaml",
+        "note": "orchestration_only"
       }
     }
   },
   "instructions": [
     ".ai-factory/DESCRIPTION.md",
     ".ai-factory/ARCHITECTURE.md",
+    ".ai-factory/PLAN.md",
     "AGENTS.md"
   ]
 }

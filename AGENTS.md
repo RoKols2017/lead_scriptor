@@ -1,101 +1,209 @@
 # AGENTS.md
 
-> Project map for AI agents. Keep this file up-to-date as the project evolves.
+> Working guide for coding agents in `lead_scriptor`.
+> Keep this file aligned with the actual repository, not generic Python defaults.
 
-## Project Overview
-This workspace defines an AI-assisted intake layer for a marketing and sales content pipeline. The repository now contains project specifications plus concrete schemas, prompt templates, pipeline configs, reference docs, and export scaffolding for the planned workflow.
+## Project Summary
 
-## Tech Stack
-- **Platform:** OpenCode + AI Factory
-- **Primary Formats:** Markdown, YAML, JSON, XLSX
-- **Models:** `openai/gpt-5.4`, `openai/gpt-5.4-mini`, `openai/gpt-5.4-nano`
-- **Architecture:** Modular Monolith (planned)
+This repository is a config-first workspace for intake, normalization, validation, and pipeline orchestration.
 
-## Project Structure
-```text
-.
-├── .ai-factory.json                              # Installed AI Factory skills and MCP flags
-├── .ai-factory/                                  # AI project context files
-│   ├── DESCRIPTION.md                            # Project specification for agents
-│   ├── ARCHITECTURE.md                           # Architecture rules and module boundaries
-│   ├── PLAN.md                                   # Active implementation plan
-│   └── references/                               # Lecture and XLSX-derived knowledge layer
-├── .mcp.json                                     # Project-level MCP configuration
-├── .opencode/                                    # OpenCode local packages and installed skills
-│   ├── agents/                                   # Project agent role instructions
-│   ├── package.json                              # Local OpenCode dependency config
-│   ├── bun.lock                                  # Dependency lockfile
-│   ├── node_modules/                             # Installed packages
-│   └── skills/                                   # Installed AI Factory skills
-├── docs/                                         # Domain, validation, routing, export, and ops docs
-├── inputs/                                       # Runtime source contracts and interview inputs
-│   ├── raw/                                      # Free-form business input templates
-│   ├── normalized/                               # Canonical YAML contracts
-│   ├── validation/                               # Readiness and contradiction reports
-│   └── interviews/                               # Real interview transcript inputs
-├── outputs/                                      # Value-based export artifacts and manifests
-├── src/                                          # Minimal runtime implementation
-│   └── lead_scriptor/                            # Intake, normalization, validation and export logic
-├── tests/                                        # Runtime unit tests
-├── pipelines/                                    # Declarative pipeline definitions
-├── prompts/                                      # Intake and pipeline prompt templates
-├── runs/                                         # Per-run metadata and stage snapshots
-├── schemas/                                      # JSON Schema contracts
-├── README.md                                     # Project entry document
-├── TZ_input_structure_intake_helper_opencode_ai_factory.md  # Main product and architecture spec
-├── lecture_1_google_sheets_chatgpt.md            # Lecture 1 reference transcript
-├── lecture_2_google_sheets_chatgpt.md            # Lecture 2 reference transcript
-├── Google Sheets + ChatGPT 1.xlsx                # Reference spreadsheet input
-└── Зерокодер _ Google Sheets + ChatGPT _ CustDev _ Скрипты.xlsx  # Reference spreadsheet input
+The primary implementation surface is declarative:
+- `schemas/`
+- `pipelines/`
+- `prompts/`
+- `.opencode/agents/`
+- `.ai-factory/`
+- `docs/`
+
+Python under `src/lead_scriptor/` is support code, not the architectural center.
+
+## Source Of Truth
+
+When code and docs diverge, check these first:
+1. `.ai-factory/DESCRIPTION.md`
+2. `.ai-factory/ARCHITECTURE.md`
+3. `TZ_input_structure_intake_helper_opencode_ai_factory.md`
+4. `schemas/*.json`
+5. `pipelines/*.yaml`
+
+Design intent is conservative intake and validation:
+- do not silently invent missing required fields
+- preserve provenance from raw inputs
+- block downstream stages when required data is missing
+- treat Google Sheets as import/export compatibility, not runtime truth
+
+## Repo Layout
+
+- `src/lead_scriptor/`: minimal runtime helpers for normalization, validation, export manifest generation, and CLI entrypoints
+- `tests/`: `unittest`-based runtime tests
+- `inputs/raw/`: free-form source material
+- `inputs/normalized/`: canonical normalized YAML contracts
+- `inputs/validation/`: completeness and contradiction reports
+- `outputs/`: generated export artifacts
+- `runs/`: latest run metadata
+- `schemas/`: JSON Schema contracts
+- `pipelines/`: declarative workflow definitions
+- `docs/`: operator and product documentation
+
+## Environment Notes
+
+- The repository does not currently define a root `pyproject.toml`, `Makefile`, `Taskfile.yml`, or `Justfile`.
+- The repository does not currently define a root `package.json` for app tasks.
+- `.opencode/package.json` exists only for local OpenCode plugin dependency management.
+- Use `python3`, not `python`; `python` is not available in this workspace.
+- For Python commands, set `PYTHONPATH=src` so `lead_scriptor` imports resolve.
+
+## Build, Lint, And Test Commands
+
+These are the commands that match the current repository state.
+
+### Runtime command
+
+Run the support runtime from the repo root:
+
+```bash
+PYTHONPATH=src python3 -m lead_scriptor --root .
 ```
 
-## Key Entry Points
-| File | Purpose |
-|------|---------|
-| `TZ_input_structure_intake_helper_opencode_ai_factory.md` | Main functional specification for the intake-helper concept |
-| `opencode.json` | Runtime routing and agent registration config |
-| `src/lead_scriptor/cli.py` | Current runtime entry point for normalization and validation |
-| `pipelines/homework_marketing.yaml` | Declarative marketing homework pipeline |
-| `pipelines/homework_custdev_simulated.yaml` | Declarative simulated custdev pipeline |
-| `.ai-factory.json` | Declares installed skills and high-level MCP toggles |
-| `.mcp.json` | Project MCP server configuration |
-| `.opencode/package.json` | Local OpenCode dependency manifest |
+This writes normalized contracts, validation reports, export manifest data, and `runs/latest-run.json`.
 
-## Documentation
-| Document | Path | Description |
-|----------|------|-------------|
-| Main spec | `TZ_input_structure_intake_helper_opencode_ai_factory.md` | Detailed product, input model, and validation design |
-| README (RU) | `README.md` | Russian landing page |
-| README (EN) | `README.en.md` | English landing page |
-| Usage (RU) | `docs/usage.md` | Russian workflow guide |
-| Usage (EN) | `docs/en/usage.md` | English workflow guide |
-| Normalization (RU) | `docs/normalization-rules.md` | Russian normalization rules |
-| Normalization (EN) | `docs/en/normalization-rules.md` | English normalization rules |
-| Validation (RU) | `docs/validation-rules.md` | Russian validation rules |
-| Validation (EN) | `docs/en/validation-rules.md` | English validation rules |
-| Provenance (RU) | `docs/provenance.md` | Russian provenance guide |
-| Provenance (EN) | `docs/en/provenance.md` | English provenance guide |
-| Export Mapping (RU) | `docs/export-mapping.md` | Russian export mapping |
-| Export Mapping (EN) | `docs/en/export-mapping.md` | English export mapping |
-| Usage Add-ons (RU) | `docs/orchestration.md` | Russian orchestration contract |
-| Usage Add-ons (EN) | `docs/en/orchestration.md` | English orchestration contract |
-| Testing (RU) | `docs/testing-strategy.md` | Russian testing strategy |
-| Testing (EN) | `docs/en/testing-strategy.md` | English testing strategy |
-| Pilot Checklist | `docs/pilot-readiness-checklist.md` | Pre-pilot contract checklist |
-| Pilot Matrix | `docs/pilot-smoke-matrix.md` | Pilot smoke scenarios |
-| Pilot Triage | `docs/pilot-triage.md` | Blocked route recovery guide |
-| Pilot Runbook | `docs/operational-runbook.md` | Operator pilot procedure |
+### Full test suite
 
-## AI Context Files
-| File | Purpose |
-|------|---------|
-| `AGENTS.md` | This file - project structure map |
-| `.ai-factory/DESCRIPTION.md` | Project specification and tech stack |
-| `.ai-factory/ARCHITECTURE.md` | Architecture decisions and guidelines |
+Use discovery. Plain `python3 -m unittest` does not find tests here.
 
-## Notes For Agents
-- Treat the markdown spec as the source of truth until application code exists.
-- Prefer normalized contracts and pipeline configs over legacy spreadsheet coupling.
-- Treat schemas, prompts, agent instructions, and pipeline YAML as the primary implementation surface.
-- Do not expand `src/` into the main architecture without explicit user approval.
-- Prefer adding implementation work under the architecture rules in `.ai-factory/ARCHITECTURE.md`.
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests
+```
+
+### Single test file
+
+```bash
+PYTHONPATH=src python3 -m unittest tests.test_runtime
+```
+
+### Single test class
+
+```bash
+PYTHONPATH=src python3 -m unittest tests.test_runtime.RuntimeTests
+```
+
+### Single test method
+
+```bash
+PYTHONPATH=src python3 -m unittest tests.test_runtime.RuntimeTests.test_lpr_is_blocked_when_titles_missing_and_auto_discover_false
+```
+
+### Optional syntax smoke check
+
+There is no configured build step. For a cheap syntax-only verification, use:
+
+```bash
+PYTHONPATH=src python3 -m compileall src tests
+```
+
+### Linting / formatting status
+
+There is no configured repo-level linter or formatter at the moment.
+
+That means:
+- no verified `ruff` command
+- no verified `black` command
+- no verified `mypy` command
+- no verified `pytest` command
+
+Do not add or assume those tools unless the user asks for toolchain changes.
+
+## Test Expectations
+
+- Keep tests in `tests/`.
+- Follow the current `unittest.TestCase` style unless the repo is intentionally migrated.
+- Prefer narrow tests against observable file outputs and validation payloads.
+- For runtime tests, isolate filesystem effects with `tempfile.TemporaryDirectory()`.
+- Assert on concrete output fields, not broad snapshots.
+
+## Python Style Observed In Repo
+
+### Imports
+
+- Use `from __future__ import annotations` in modules that already follow that pattern.
+- Group imports in this order: standard library, third-party, local package imports.
+- Use relative imports inside `src/lead_scriptor/` modules.
+- Avoid unused imports and wildcard imports.
+
+### Formatting
+
+- Follow PEP 8 style and keep formatting simple.
+- Prefer short, readable functions.
+- Use 4-space indentation.
+- Keep line length reasonable; optimize for readability over squeezing expressions.
+- Preserve the repository's straightforward style instead of introducing heavy abstraction.
+
+### Types
+
+- Add type hints for function signatures.
+- The existing code uses built-in generics like `list[str]` and `dict[str, Any]`; follow that style.
+- Use `Any` sparingly and only where payloads are intentionally dynamic.
+- Prefer concrete container shapes over vague typing when easy to express.
+
+### Naming
+
+- Functions and variables: `snake_case`.
+- Constants: `UPPER_SNAKE_CASE`.
+- Test methods: `test_<behavior>`.
+- Use names that reflect domain concepts from schemas and contracts.
+- Keep file names descriptive and aligned with the domain stage: `normalize`, `validate`, `extract`, `export_profiles`.
+
+### Data And Contracts
+
+- Match existing contract keys exactly; downstream logic depends on stable field names.
+- Prefer editing schema, prompt, or pipeline files when changing behavior that is primarily declarative.
+- Do not treat generated artifacts in `outputs/` or `runs/` as business inputs.
+- `inputs/raw/` is source material; avoid mutating user-authored meaning.
+
+### Error Handling
+
+- Fail conservatively.
+- Do not mask missing required inputs with guessed defaults.
+- Use explicit checks like the existing `_missing()` helper style for validation logic.
+- Raise or surface clear failures when behavior cannot be completed safely.
+- When adding validation rules, make blocker vs warning severity obvious in code and outputs.
+
+### Logging
+
+- Follow the existing structured logging pattern in `logging_utils.py`.
+- Emit machine-readable JSON log lines via `log_event()`.
+- Keep event names stable and payloads compact.
+- Use `ensure_ascii=True` behavior for JSON output consistency.
+
+### File IO
+
+- Use `pathlib.Path`.
+- Always specify `encoding="utf-8"` for text file reads and writes.
+- Create parent directories as needed before writing.
+- Preserve the existing convention of newline-terminated output files.
+
+## Architecture Rules For Agents
+
+- Respect the modular boundaries in `.ai-factory/ARCHITECTURE.md`.
+- Keep intake, validation, prompting, pipelines, and export concerns separate.
+- Do not move business logic into prompts if it belongs in schemas or validation.
+- Do not expand `src/` into the main architecture without explicit approval.
+- Prefer the smallest correct change.
+
+## Rule Files Check
+
+Repository scan results:
+- No `.cursorrules` file found.
+- No `.cursor/rules/` directory found.
+- No `.github/copilot-instructions.md` file found.
+
+If those files are added later, merge their instructions into this guide and treat the repo-specific rule files as higher-priority operational guidance.
+
+## Practical Agent Guidance
+
+- Read surrounding schemas, prompts, and pipeline files before changing behavior.
+- Expect the worktree to be dirty; do not revert unrelated user changes.
+- Be careful running the runtime command in the repo root because it updates tracked generated artifacts.
+- If you need a safe verification path, prefer the isolated unit tests first.
+- When changing output structure, update tests in the same edit.
+- When behavior is ambiguous, prefer explicit documentation over implicit inference.

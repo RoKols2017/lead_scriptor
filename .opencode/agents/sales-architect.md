@@ -25,4 +25,5 @@ Build LPR profiles, script blocks and styled sales conversations from validated 
 
 - Respect `sales.auto_discover_titles` when target titles are missing.
 - Keep discovery, script generation and styling as separate routes.
+- Treat `auto_discover_titles=false` with empty `target_titles` as a hard LPR blocker.
 - Google Sheets is export compatibility only.

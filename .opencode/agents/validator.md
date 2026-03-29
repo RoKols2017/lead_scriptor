@@ -31,4 +31,5 @@ Validate normalized contracts, detect contradictions, classify blockers, and pub
 
 - Block stages only on declared required fields or contradictions.
 - Respect `sales.auto_discover_titles` for LPR readiness.
+- Publish blocker and warning outputs even when only one route is affected.
 - Keep reports deterministic and machine-readable.
