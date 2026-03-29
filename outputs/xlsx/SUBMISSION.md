@@ -6,6 +6,10 @@ Prepared files for homework submission:
 
 - `lecture-1-homework.xlsx`
   - use sheet: `Демонстрация`
+  - replaced with a custom lecture 1 homework workbook containing 3 sheets:
+  - `1. Описание продукта`
+  - `2. Тест формул`
+  - `3. Идеи проектов`
 - `lecture-2-homework.xlsx`
   - primary homework sheets:
   - `Описание ЦА + CustDev`
