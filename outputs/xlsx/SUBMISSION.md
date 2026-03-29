@@ -11,7 +11,7 @@ Prepared files for homework submission:
   - `2. Тест формул`
   - `3. Идеи проектов`
 - `lecture-2-homework.xlsx`
-  - primary homework sheets:
+  - replaced with a custom lecture 2 homework workbook containing 3 sheets:
   - `Описание ЦА + CustDev`
   - `Определение ЛПР`
   - `Генерация скрипта`
