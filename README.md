@@ -2,7 +2,56 @@
 
 > Русская версия. English: `README.en.md`
 
-Конфигурационный workspace для структурированного intake, валидации и оркестрации pipeline-маршрутов для маркетинга, custdev, поиска ЛПР и sales scripts.
+Lead Scriptor - это config-first workspace для структурированного intake, валидации и orchestration pipeline-маршрутов для маркетинга, custdev, поиска ЛПР и sales scripts.
+
+Вместо разрозненных таблиц, заметок и ручной передачи контекста проект переводит входные данные в нормализованные контракты, проверяет readiness маршрута и только потом запускает downstream pipeline.
+
+## Какую задачу решает
+
+Когда intake по лидам, custdev и sales-сценариям живет в Google Sheets, текстовых заметках и ручных инструкциях, команда быстро теряет структуру, provenance и критерии готовности.
+
+Lead Scriptor нужен для того, чтобы:
+
+- собрать сырой бизнес-контекст в одном месте;
+- превратить его в канонические контракты;
+- проверить, достаточно ли данных для следующего шага;
+- запускать pipeline только после подтвержденной readiness.
+
+## Что делает решение
+
+- принимает исходный контекст через `inputs/raw/*`;
+- прогоняет маршрут `intake_ingest -> normalize_and_save -> validation`;
+- сохраняет нормализованные контракты в `inputs/normalized/*.yaml`;
+- формирует validation artifacts и guided questions, если маршрут заблокирован;
+- отдает downstream artifacts и export-результаты только после проверки readiness.
+
+## Что получает команда на выходе
+
+- нормализованные contracts вместо хаотичных заметок;
+- validation reports с понятными блокерами;
+- повторно используемые pipeline artifacts в `outputs/` и `runs/`;
+- более предсказуемый запуск маркетинговых, custdev и sales workflow.
+
+## Proof: sample route
+
+```text
+inputs/raw/product.md + company.md + audience.md + tone.md + constraints.md
+  -> intake_ingest
+  -> normalize_and_save
+  -> inputs/normalized/*.yaml
+  -> validation
+  -> inputs/validation/completeness.json + contradictions.json + warnings.md
+  -> export profile
+  -> outputs/json/* or outputs/xlsx/*
+```
+
+## Proof: what is actually controlled by the workspace
+
+- Intake stage требует набор raw-файлов и пишет `runs/intake-ingest.json`.
+- Validation stage проверяет normalized contracts и формирует `completeness.json`, `contradictions.json` и `warnings.md`.
+- Если route заблокирован, pipeline может быть продолжен после `inputs/raw/followup_answers.md`.
+- Export profiles уже описаны для `marketing-homework`, `custdev-simulated`, `lpr-discovery`, `sales-script` и submission-ready `.xlsx` пакетов.
+- Google Sheets остается только совместимым export/import слоем и не считается runtime-зависимостью.
 
 Целевая архитектура agent-driven: поведение проекта задается через `schemas/`, `prompts/`, `pipelines/`, `.opencode/agents/` и AI context files, а не через отдельное приложение как главный runtime.
 
